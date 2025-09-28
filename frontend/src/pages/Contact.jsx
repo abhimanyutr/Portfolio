@@ -1,10 +1,8 @@
 import React from 'react'
-
+import Bgimage from '../components/Bgimage'
 function Contact() {
   return (
-    <div>
-      
-    </div>
+    <Bgimage heading='Contact Me' text='Lets have a chat'/>
   )
 }
 

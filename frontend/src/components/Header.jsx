@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,9 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
-
-const pages = ['Products', 'Pricing', 'Blog'];
+import './Header.css'
+const pages = ['Home', 'Projects', 'Contact', 'About'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
@@ -35,33 +36,47 @@ function Header() {
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorElUser();
   };
 
+  const[color,setColor] = useState(false);
+  const changeColor = () =>{
+    if(window.scrolly >=100)
+    {
+      setColor(true);
+    }
+    else{
+      setColor(false);
+    }
+  };
+  window.addEventListener("scroll",changeColor);
 
   return (
-    <div>
-      <AppBar position="static"sx={{backgroundColor:"transparent"}} >
+    <div className={color ? "header header-bg": "header"}>
+      <AppBar position="static"sx={{backgroundColor:"transparent",boxShadow:"none"}} >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+          <Link to={''} >
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'Poppins, sans-serif',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'white',
+                textDecoration: 'none',
+                
+              }}
+            >
+              Portfolio.
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -114,7 +129,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Portfolio
           </Typography>
          <Box
   sx={{
@@ -125,20 +140,22 @@ function Header() {
   }}
 >
   {pages.map((page) => (
-    <Button
-      key={page}
-      onClick={handleCloseNavMenu}
-      sx={{ my: 2, color: 'white', display: 'block' }}
-    >
-      {page}
-    </Button>
-  ))}
+  <Button
+    key={page}
+    component={Link}           // Use react-router Link
+    to={`/${page.toLowerCase()}`} // Route path (e.g., /home, /projects)
+    onClick={handleCloseNavMenu}
+    sx={{ my: 2, color: 'white', display: 'block' }}
+  >
+    {page}
+  </Button>
+))}
 </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="https://static.vecteezy.com/system/resources/thumbnails/007/814/266/small_2x/programmer-and-engineering-development-coding-web-development-website-design-developer-flat-vector.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
